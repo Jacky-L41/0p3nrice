@@ -7,7 +7,7 @@ const app = express();
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 // const ObjectId = require('mongodb').ObjectID;
-import { url } from "./mongodb_url.js";
+const url = require('./mongodb_url')
 const dbName = 'comps381f_project';
 
 
