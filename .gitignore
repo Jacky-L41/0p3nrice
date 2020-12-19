@@ -104,4 +104,4 @@ dist
 .tern-port
 
 # Mongodb URL
-mongodb_url.js
+models/mongodb_url.js
