@@ -30,7 +30,10 @@ app.get('/', (req,res) => {
     if (!req.session.authenticated) {    // user not logged in!
         res.redirect('/login');
     } else {
-        res.status(200).render('secrets',{name:req.session.username});
+		dbactions.getRestaurantList((r_list)=>{
+			res.status(200).render('mainpage',{name:req.session.username,rList: r_list});
+		});
+        // res.status(200).render('mainpage',{name:req.session.username,rList: dbactions.getRestaurantList()});
     }
 });
 
@@ -97,7 +100,8 @@ app.post('/create_restaurant', (req,res) => {
                    photo_mimetype: req.body.photo_mime,
                    address: req.body.address,
                    grades: req.body.grades,
-                   owner: req.body.owner
+				   owner: req.body.owner,
+				   create_by: req.session.username
                    }   
 
 		dbactions.uploadRestaurant(payload,()=>{

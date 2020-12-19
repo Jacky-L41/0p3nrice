@@ -26,6 +26,37 @@ const uploadRestaurant = (payload, callback) => {
     });
 }
 
-module.exports = { uploadRestaurant: uploadRestaurant}
+const getRestaurantList = (callback) => {
+    var alist = []
+
+    var findRestaurants = function(db, callback) {
+        // Get the documents collection
+        var collection = db.collection('restaurants');
+        // Find some documents
+        collection.find({}, { 'name' : 1}).toArray(function(err, docs) {
+          assert.strictEqual(err, null);
+          console.log("Found the following records");
+        //   console.log(docs)
+          callback(docs);
+        });
+      }
+
+    const client = new MongoClient(url);
+    client.connect((err) => {
+        assert.strictEqual(null,err);
+        console.log("Connected successfully to server");
+
+        const db = client.db(dbName);
+
+        findRestaurants(db,(a_list) => {
+           client.close();
+           callback(a_list);
+        })
+    });
+}
+
+module.exports = { uploadRestaurant: uploadRestaurant,
+                   getRestaurantList: getRestaurantList
+                 };
 
 
