@@ -1,0 +1,26 @@
+<html>
+   <body>
+      <H1>0p3n R1c3!</H1>
+      <H2>Hello, <%= name %></H2>
+      <a href='/create_restaurant'>Create new restaurant record</a>
+      <br>
+      <br>
+      <% if (rList.length>0){ %>
+      <table>
+         <tr>
+            <th>Name</th>
+         </tr>
+         <% for (i = 0; i<rList.length;i++){ %>
+            <tr>
+            <td><a href='/details?_id=<%= rList[i]._id %>'><%= rList[i].name %></a></td>
+            </tr>
+
+         <% } %>
+      </table>
+      <% }else { %>
+         <p> No restaurant record yet.</p>
+      <% } %>
+      <br>
+      <a href='/logout'>Logout</a>
+   </body>
+</html>
