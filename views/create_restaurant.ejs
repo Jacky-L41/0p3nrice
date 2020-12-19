@@ -1,0 +1,22 @@
+<html>
+
+<body>
+	<p>Create restaurant record:</p>
+	<hr>
+	<form action="/create_restaurant" method="post">
+        Restaurant ID: <input type="text" name="r_id"><br>
+        Name: <input type="text" name="name" required><br>
+        Borough: <input type="text" name="borough"><br>
+        Cuisine: <input type="text" name="cuisine"><br>
+        Photo: <input type="file" name="photo"><br>
+        Photo MIME type: <input type="text" name="photo_mime"><br>
+        Address: <input type="text" name="address"><br>
+        Grades: <input type="text" name="grades"><br>
+		Owner: <input type="text" name="owner" required><br>
+		<br>
+		
+		<input type="submit" value="Add">
+	</form>
+</body>
+
+</html>
