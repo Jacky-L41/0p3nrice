@@ -19,7 +19,8 @@ app.set('view engine','ejs');
 
 app.use(session({
   name: 'loginSession',
-  keys: [SECRETKEY]
+  keys: [SECRETKEY],
+  maxAge: 5 * 60 * 1000
 }));
 
 // support parsing of application/json type post data
@@ -51,7 +52,7 @@ app.post('/login', (req,res) => {
             // store the following name/value pairs in cookie session
             error = false
             req.session.authenticated = true;        // 'authenticated': true
-            req.session.username = req.body.name;	 // 'username': req.body.name		
+			req.session.username = req.body.name;	 // 'username': req.body.name	
         }
     });
     if (error){
