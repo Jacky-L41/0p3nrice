@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
-// const ObjectId = require('mongodb').ObjectID;
+const ObjectId = require('mongodb').ObjectId;
 const url = require('./mongodb_url');
 const dbName = 'comps381f_project';
 
@@ -27,13 +27,11 @@ const uploadRestaurant = (payload, callback) => {
 }
 
 const getRestaurantList = (callback) => {
-    var alist = []
-
     var findRestaurants = function(db, callback) {
         // Get the documents collection
         var collection = db.collection('restaurants');
         // Find some documents
-        collection.find({}, { 'name' : 1}).toArray(function(err, docs) {
+        collection.find({}, {projection: {'name': 1}}).toArray(function(err, docs) {
           assert.strictEqual(err, null);
           console.log("Found the following records");
         //   console.log(docs)
@@ -55,8 +53,25 @@ const getRestaurantList = (callback) => {
     });
 }
 
+const getRestaurant = (r_id, callback) => {
+    const client = new MongoClient(url);
+    client.connect((err)=>{
+        assert.strictEqual(err,null);
+        console.log("Connected successfully to server");
+        const db = client.db(dbName);
+        const collection = db.collection('restaurants');
+        collection.findOne({_id: ObjectId(r_id)}, (err,doc)=>{
+            assert.strictEqual(err,null);
+            console.log("Found records");
+            // console.log(doc);
+            callback(doc);
+        })
+    })
+}
+
 module.exports = { uploadRestaurant: uploadRestaurant,
-                   getRestaurantList: getRestaurantList
+                   getRestaurantList: getRestaurantList,
+                   getRestaurant: getRestaurant
                  };
 
 

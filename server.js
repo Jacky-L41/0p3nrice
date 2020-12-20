@@ -31,6 +31,7 @@ app.get('/', (req,res) => {
         res.redirect('/login');
     } else {
 		dbactions.getRestaurantList((r_list)=>{
+			// console.log(r_list);
 			res.status(200).render('mainpage',{name:req.session.username,rList: r_list});
 		});
         // res.status(200).render('mainpage',{name:req.session.username,rList: dbactions.getRestaurantList()});
@@ -97,9 +98,10 @@ app.post('/create_restaurant', (req,res) => {
                    borough: req.body.borough,
                    cuisine: req.body.cuisine,
                    photo: req.body.photo,
-                   photo_mimetype: req.body.photo_mime,
-                   address: req.body.address,
-                   grades: req.body.grades,
+				   street: req.body.street,
+				   building: req.body.building,
+				   zipcode: req.body.zipcode,
+				   coord: [req.body.coord_lon, req.body.coord_lat],
 				   owner: req.body.owner,
 				   create_by: req.session.username
                    }   
@@ -111,6 +113,21 @@ app.post('/create_restaurant', (req,res) => {
     else{
         res.status(401).end("Unauthorized");
     }
+});
+
+app.get('/details', (req,res) => {
+	if(req.session.authenticated){
+		if(req.query._id != ''){
+			dbactions.getRestaurant(req.query._id, (aRestaurant)=>{
+				res.render('details', { aRestaurant: aRestaurant});
+			});
+		}else{
+			res.redirect('/');
+		}
+	}
+	else{
+		res.status(401).end("Unauthorized");
+	}
 });
 
 app.get('/logout', (req,res) => {
