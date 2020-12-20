@@ -69,9 +69,32 @@ const getRestaurant = (r_id, callback) => {
     })
 }
 
+const uploadRate = (payload, callback) => {
+    const client = new MongoClient(url);
+    const insertDocument = (db, callback) => {
+        // console.log(JSON.stringify(payload));
+        db.collection('restaurants').updateOne( {_id: ObjectId(payload._id)},{$push: {grades: {user:payload.user,score:payload.score}}}, (err, result) => {
+           assert.strictEqual(err, null);
+           console.log("Successfully uploaded rate");
+           callback(result);
+       });
+    };
+    client.connect((err) => {
+        assert.strictEqual(null,err);
+        console.log("Connected successfully to server");
+        const db = client.db(dbName);
+        insertDocument(db, () => {
+            client.close();
+            console.log("Disconnected MongoDB server");
+            callback()
+        });
+    });
+}
+
 module.exports = { uploadRestaurant: uploadRestaurant,
                    getRestaurantList: getRestaurantList,
-                   getRestaurant: getRestaurant
+                   getRestaurant: getRestaurant,
+                   uploadRate: uploadRate
                  };
 
 

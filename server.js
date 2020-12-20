@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const dbactions = require('./models/dbactions');
+const { ObjectId } = require('bson');
 
 app.set('view engine','ejs');
 
@@ -26,7 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req,res) => {
-    console.log(req.session);
+    // console.log(req.session);
     if (!req.session.authenticated) {    // user not logged in!
         res.redirect('/login');
     } else {
@@ -97,11 +98,14 @@ app.post('/create_restaurant', (req,res) => {
                    name: req.body.name, 
                    borough: req.body.borough,
                    cuisine: req.body.cuisine,
-                   photo: req.body.photo,
-				   street: req.body.street,
-				   building: req.body.building,
-				   zipcode: req.body.zipcode,
-				   coord: [req.body.coord_lon, req.body.coord_lat],
+				   photo: req.body.photo,
+				   address:{
+					   street: req.body.street,
+					   building: req.body.building,
+					   zipcode: req.body.zipcode,
+					   coord: [req.body.coord_lon, req.body.coord_lat],
+					},
+				   grades:[],
 				   owner: req.body.owner,
 				   create_by: req.session.username
                    }   
@@ -119,7 +123,16 @@ app.get('/details', (req,res) => {
 	if(req.session.authenticated){
 		if(req.query._id != ''){
 			dbactions.getRestaurant(req.query._id, (aRestaurant)=>{
-				res.render('details', { aRestaurant: aRestaurant});
+				var isRated = false;
+				aRestaurant.grades.forEach((gradeRec)=>{
+					if (gradeRec.user == req.session.username){
+						isRated = true
+					}
+				});
+				res.render('details', { aRestaurant: aRestaurant,
+										isRated: isRated,
+										isRecordOwner: (aRestaurant.create_by == req.session.username)
+									});
 			});
 		}else{
 			res.redirect('/');
@@ -128,6 +141,46 @@ app.get('/details', (req,res) => {
 	else{
 		res.status(401).end("Unauthorized");
 	}
+});
+
+app.get('/rate', (req,res) => {
+	if(req.session.authenticated){
+		if(req.query._id != ''){
+			dbactions.getRestaurant(req.query._id, (aRestaurant)=>{
+				var isRated = false;
+				aRestaurant.grades.forEach((gradeRec)=>{
+					if (gradeRec.user == req.session.username){
+						isRated = true
+					}
+				});
+				res.render('rate', { aRestaurant: aRestaurant,
+										is_rated: isRated
+									});
+			});
+		}else{
+			res.redirect('/');
+		}
+	}
+	else{
+		res.status(401).end("Unauthorized");
+	}
+});
+
+app.post('/rate', (req,res) => {
+    if (req.session.authenticated){
+        payload = {
+			"_id": req.query._id,
+			"user": req.session.username,
+			"score": req.body.score
+		}   
+
+		dbactions.uploadRate(payload,()=>{
+			res.redirect('/');
+		});
+    }
+    else{
+        res.status(401).end("Unauthorized");
+    }
 });
 
 app.get('/logout', (req,res) => {

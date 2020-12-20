@@ -9,11 +9,42 @@
         <p>Building: <%= aRestaurant.building %></p>
         <p>Zipcode: <%= aRestaurant.zipcode %></p>
         <p>GPS: <%= aRestaurant.coord %></p>
-        <p>Rating: <%= aRestaurant.ratings %></p>
+        <p>Rating: <%= JSON.stringify(aRestaurant.grades) %></p>
         <p>Create by: <%= aRestaurant.create_by %></p>
+
+        <button onclick="location.href='/rate?_id=<%= aRestaurant._id %>'" 
+            <% if (isRated) { %>
+                disabled
+                >Rate(You have rated)
+            <% }else{ %>
+                >Rate
+            <% } %> 
+                
+        </button>
+
+        <button onclick="location.href='/edit?_id=<%= aRestaurant._id %>'" 
+            <% if (!isRecordOwner) { %>
+                disabled
+                >Edit(Not Owned)
+            <% }else{ %>
+                >Edit
+            <% } %> 
+                
+        </button>
+        
+        <button onclick="location.href='/delete?_id=<%= aRestaurant._id %>'" 
+            <% if (!isRecordOwner) { %>
+                disabled
+                >Delete(Not Owned)
+            <% }else{ %>
+                >Delete
+            <% } %> 
+                
+        </button>
+        
         <br>
-        <a href='/'>Back to main page</a>
+        <input type='button' value='Back to main page' onclick="location.href='/'">
         <br>
-        <a href='/logout'>Logout</a>
+        <button onclick="location.href='/logout'">Logout</button>
    </body>
 </html>

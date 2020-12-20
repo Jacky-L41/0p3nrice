@@ -19,3 +19,10 @@ npm start
 ```
 ### Testing
 Go to http://localhost:8099
+
+
+Upload Rate:
+db.restaurants.update({ _id: payload._id }, {$push: {grades: {user:"student",score:1}}})
+
+Modify Rate:
+db.restaurants.update({ _id: payload._id },{ $set: { "grades.$\[elem\].score" : 2 } },{arrayFilters: [ { "elem.user": { $eq: "demo" } } ]})
