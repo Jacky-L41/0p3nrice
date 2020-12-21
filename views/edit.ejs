@@ -1,0 +1,27 @@
+<html>
+
+<body>
+	<p>Edit restaurant record:</p>
+	<hr>
+  <form action="/edit" method="post" enctype="multipart/form-data">
+        <input name="_id" value="<%= aRestaurant._id %>" type="hidden">
+        <input name="create_by" value="<%= aRestaurant.create_by %>" type="hidden">
+        Restaurant ID: <input type="text" name="r_id" value="<%= aRestaurant.r_id %>"><br>
+        Name: <input type="text" name="name" required value="<%= aRestaurant.name %>"><br>
+        Borough: <input type="text" name="borough" value="<%= aRestaurant.borough %>"><br>
+        Cuisine: <input type="text" name="cuisine" value="<%= aRestaurant.cuisine %>"><br>
+        Photo: <input type="file" name="photo"><br>
+        Street: <input type="text" name="street" value="<%= aRestaurant.address.street %>"><br>
+        Building: <input type="text" name="building" value="<%= aRestaurant.address.building %>"><br>
+        Zipcode: <input type="text" name="zipcode" value="<%= aRestaurant.address.zipcode %>"><br>
+        GPS coordinate (longtitude): <input type="text" name="coord_lon" value="<%= aRestaurant.address.coord[0] %>"><br>
+        GPS coordinate (latitude): <input type="text" name="coord_lat" value="<%= aRestaurant.address.coord[1] %>"><br>
+		    Owner: <input type="text" name="owner" required value="<%= aRestaurant.owner %>"><br>
+		<br>
+		
+		<input type="submit" value="Edit">
+    </form>
+    <a href='/'>Go Back</a>
+</body>
+
+</html>

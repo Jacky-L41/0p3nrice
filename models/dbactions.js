@@ -1,5 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
+const { call } = require('function-bind');
 const ObjectId = require('mongodb').ObjectId;
 const url = require('./mongodb_url');
 const dbName = 'comps381f_project';
@@ -92,7 +93,8 @@ const getRestaurant = (r_id, callback) => {
 
 const uploadRate = (payload, callback) => {
     const client = new MongoClient(url);
-    const insertDocument = (db, callback) => {
+    var message = "";
+    const insertRate = (db, callback) => {
         // console.log(JSON.stringify(payload));
         db.collection('restaurants').updateOne( {_id: ObjectId(payload._id)},{$push: {grades: {user:payload.user,score:payload.score}}}, (err, result) => {
            assert.strictEqual(err, null);
@@ -100,23 +102,58 @@ const uploadRate = (payload, callback) => {
            callback(result);
        });
     };
-    client.connect((err) => {
-        assert.strictEqual(null,err);
-        console.log("Connected successfully to server");
+    var n = Math.floor(Number(payload.score));
+    if(n !== Infinity && String(n) === payload.score && n > 0 && n <= 10){
+        client.connect((err) => {
+            assert.strictEqual(null,err);
+            console.log("Connected successfully to server");
+            const db = client.db(dbName);
+            insertRate(db, () => {
+                client.close();
+                console.log("Disconnected MongoDB server");
+                message = "Successfully rate the restaurant.";
+                callback(message);
+            });
+        });
+    }
+    else{
+        message = "Score format not match, you modified, don't you?";
+        callback(message);
+    }
+}
+
+const deleteRestaurant = (r_id,callback) =>{
+    const client = new MongoClient(url);
+    client.connect((err)=>{
+        assert.strictEqual(err,null);
         const db = client.db(dbName);
-        insertDocument(db, () => {
-            client.close();
-            console.log("Disconnected MongoDB server");
-            callback()
+        const collection = db.collection('restaurants');
+        collection.deleteOne({_id: ObjectId(r_id)},(err)=>{
+            assert.strictEqual(err,null);
+            callback();
         });
     });
 }
 
+const editRestaurant = (payload, anId, callback)=>{
+    const client = new MongoClient(url);
+    client.connect((err)=>{
+        assert.strictEqual(err,null);
+        const db = client.db(dbName);
+        const collection = db.collection('restaurants');
+        collection.updateOne({_id:ObjectId(anId)}, {$set: payload},(err)=>{
+            assert.strictEqual(err,null);
+            callback();
+        })
+    });
+}
 module.exports = { uploadRestaurant: uploadRestaurant,
                    getRestaurantList: getRestaurantList,
                    getRestaurant: getRestaurant,
                    uploadRate: uploadRate,
-                   isIdExisted: isIdExisted
+                   isIdExisted: isIdExisted,
+                   deleteRestaurant: deleteRestaurant,
+                   editRestaurant: editRestaurant
                  };
 
 

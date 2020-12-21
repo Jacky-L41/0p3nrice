@@ -4,7 +4,9 @@
 	<h1>Rate</h1>
 	<form action="/rate?_id=<%= aRestaurant._id %>" method="post">
 		Score: <input type="text" pattern="[1-9]{1}" name="score"><br>
-		<br>
+        <br>
+        <input type="hidden" name="_id" value="<%= aRestaurant._id %>" disabled>
+        <input type="hidden" name="name" value="<%= aRestaurant.name %>" disabled>
         <input type="submit" 
             <% if (is_rated) { %>
                 disabled
