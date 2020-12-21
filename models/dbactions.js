@@ -4,6 +4,27 @@ const ObjectId = require('mongodb').ObjectId;
 const url = require('./mongodb_url');
 const dbName = 'comps381f_project';
 
+const isIdExisted = async (anId) => {
+    const client = new MongoClient(url)
+    try{
+        await client.connect();
+        const db = client.db(dbName);
+        const collection = db.collection('restaurants');
+        const cursor = collection.find({},{projection:{_id:1}});
+        await cursor.forEach((doc)=>{
+            if(doc._id == anId){
+                return true;
+            }
+        });
+    }
+    finally{
+        await client.close();
+    }
+    return false;
+    
+}
+
+
 
 const uploadRestaurant = (payload, callback) => {
     const client = new MongoClient(url);
@@ -94,7 +115,8 @@ const uploadRate = (payload, callback) => {
 module.exports = { uploadRestaurant: uploadRestaurant,
                    getRestaurantList: getRestaurantList,
                    getRestaurant: getRestaurant,
-                   uploadRate: uploadRate
+                   uploadRate: uploadRate,
+                   isIdExisted: isIdExisted
                  };
 
 

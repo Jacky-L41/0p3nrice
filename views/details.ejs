@@ -3,12 +3,17 @@
         <H1><%= aRestaurant.name %></H1>
         <br>
         <br>
+        <% if(JSON.stringify(aRestaurant.photo).length > 2){ %>
+            <p><img src="data:<%= aRestaurant.mimetype %>;base64, <%= aRestaurant.photo %>"></p>
+        <% } else {%>
+            <p>No photo of <%= aRestaurant.name %></p>
+        <% } %>
         <p>Borough: <%= aRestaurant.borough %></p>
         <p>Cuisine: <%= aRestaurant.cuisine %></p>
-        <p>Street: <%= aRestaurant.street %></p>
-        <p>Building: <%= aRestaurant.building %></p>
-        <p>Zipcode: <%= aRestaurant.zipcode %></p>
-        <p>GPS: <%= aRestaurant.coord %></p>
+        <p>Street: <%= aRestaurant.address.street %></p>
+        <p>Building: <%= aRestaurant.address.building %></p>
+        <p>Zipcode: <%= aRestaurant.address.zipcode %></p>
+        <p>GPS: <%= JSON.stringify(aRestaurant.address.coord) %></p>
         <p>Rating: <%= JSON.stringify(aRestaurant.grades) %></p>
         <p>Create by: <%= aRestaurant.create_by %></p>
 

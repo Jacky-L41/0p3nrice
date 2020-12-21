@@ -2,9 +2,15 @@ const express = require('express');
 const session = require('cookie-session');
 const bodyParser = require('body-parser');
 const app = express();
-
+const formidable = require('formidable');
 const dbactions = require('./models/dbactions');
-const { ObjectId } = require('bson');
+// const { ObjectId } = require('bson');
+const fs = require('fs');
+const assert = require('assert');
+// const { find } = require('methods');
+// const { arch } = require('os');
+// const { assert } = require('console');
+// const { fstat } = require('fs');
 
 app.set('view engine','ejs');
 
@@ -20,7 +26,6 @@ app.set('view engine','ejs');
 app.use(session({
   name: 'loginSession',
   keys: [SECRETKEY],
-  maxAge: 5 * 60 * 1000
 }));
 
 // support parsing of application/json type post data
@@ -33,7 +38,6 @@ app.get('/', (req,res) => {
         res.redirect('/login');
     } else {
 		dbactions.getRestaurantList((r_list)=>{
-			// console.log(r_list);
 			res.status(200).render('mainpage',{name:req.session.username,rList: r_list});
 		});
         // res.status(200).render('mainpage',{name:req.session.username,rList: dbactions.getRestaurantList()});
@@ -94,25 +98,37 @@ app.get('/create_restaurant', (req,res) => {
 
 
 app.post('/create_restaurant', (req,res) => {
-    if (req.session.authenticated){
-        payload = {restaurant_id: req.body.r_id, 
-                   name: req.body.name, 
-                   borough: req.body.borough,
-                   cuisine: req.body.cuisine,
-				   photo: req.body.photo,
-				   address:{
-					   street: req.body.street,
-					   building: req.body.building,
-					   zipcode: req.body.zipcode,
-					   coord: [req.body.coord_lon, req.body.coord_lat],
-					},
-				   grades:[],
-				   owner: req.body.owner,
-				   create_by: req.session.username
-                   }   
-
-		dbactions.uploadRestaurant(payload,()=>{
-			res.redirect('/');
+    if (req.session.authenticated){  
+		payload = {};
+		const form = new formidable.IncomingForm();
+		form.parse(req, (err, fields, files)=>{
+			assert.strictEqual(err, null);
+			payload['restaurant_id'] = fields.r_id;
+			payload['name'] = fields.name;
+			payload['borough'] = fields.borough;
+			payload['cuisine'] = fields.cuisine;
+			payload['address'] = { street: fields.street,
+								   building: fields.building,
+								   zipcode: fields.zipcode,
+								   coord: [fields.coord_lon, fields.coord_lat]	
+								 };
+			payload['grades'] = [];
+			payload['owner'] = fields.owner;
+			payload['create_by'] = req.session.username;
+			if(files.photo && files.photo.size>0){
+				fs.readFile(files.photo.path, (err,data)=>{
+					assert.strictEqual(err, null);
+					payload['photo'] = new Buffer.from(data).toString('base64');
+					payload['mimetype'] = files.photo.type;
+					dbactions.uploadRestaurant(payload,()=>{
+						res.redirect('/');
+					});
+				});
+			}else{
+				dbactions.uploadRestaurant(payload,()=>{
+					res.redirect('/');
+				});
+			}
 		});
     }
     else{
@@ -125,11 +141,13 @@ app.get('/details', (req,res) => {
 		if(req.query._id != ''){
 			dbactions.getRestaurant(req.query._id, (aRestaurant)=>{
 				var isRated = false;
-				aRestaurant.grades.forEach((gradeRec)=>{
-					if (gradeRec.user == req.session.username){
-						isRated = true
-					}
-				});
+				if( Array.isArray(aRestaurant.grades) && aRestaurant.grades.length > 0){
+					aRestaurant.grades.forEach((gradeRec)=>{
+						if (gradeRec.user == req.session.username){
+							isRated = true
+						}
+					});
+				}
 				res.render('details', { aRestaurant: aRestaurant,
 										isRated: isRated,
 										isRecordOwner: (aRestaurant.create_by == req.session.username)
@@ -149,11 +167,13 @@ app.get('/rate', (req,res) => {
 		if(req.query._id != ''){
 			dbactions.getRestaurant(req.query._id, (aRestaurant)=>{
 				var isRated = false;
-				aRestaurant.grades.forEach((gradeRec)=>{
-					if (gradeRec.user == req.session.username){
-						isRated = true
-					}
-				});
+				if(Array.isArray(aRestaurant.grades) && aRestaurant.grades.length > 0){
+					aRestaurant.grades.forEach((gradeRec)=>{
+						if (gradeRec.user == req.session.username){
+							isRated = true
+						}
+					});
+				}
 				res.render('rate', { aRestaurant: aRestaurant,
 										is_rated: isRated
 									});
