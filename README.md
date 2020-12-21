@@ -1,12 +1,20 @@
-# Cookie Session Example
-This example demonstrates the use of cookie session to store user credential 
+# To Do:
+1. show Leaflet link when coord is available
+2. add search feature
 
-1. Note the use of the `cookie-session` middleware.
-2. Note the use of the `body-parser` middleware to extract `name` and `password` from `POST /login`.
-3. Note the flow of control and how user credential is stored and destroyed in `session`.  After a successful login, the following name/value pairs are stored in `cookie-session`:
+# Known issue
+1. Service will crack down when modify randomly query "_id". The cause is the "if" check in server.js only check if the query is empty, other than checking whether the _id exists in the mongodb.
+
+# Accounts
+Integrated accounts: 
+student (no password)
+demo (no password)
+
+### After clone
+Add your mongodb connection url to models/mongodb_url.js
+
 ```
-'authenticated': true
-'username': <username>
+echo "const url = ''; module.exports = url;" > models/mongodb_url.js
 ```
 
 ### Installing
