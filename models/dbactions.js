@@ -29,6 +29,7 @@ const isIdExisted = async (anId) => {
 
 const uploadRestaurant = (payload, callback) => {
     const client = new MongoClient(url);
+
     const insertDocument = (db, callback) => {
         db.collection('restaurants').insertOne( payload, (err, result) => {
            assert.strictEqual(err, null);
@@ -36,16 +37,20 @@ const uploadRestaurant = (payload, callback) => {
            callback(result);
        });
     };
-    client.connect((err) => {
-        assert.strictEqual(null,err);
-        console.log("Connected successfully to server");
-        const db = client.db(dbName);
-        insertDocument(db, () => {
-            client.close();
-            console.log("Disconnected MongoDB server");
-            callback()
+    if(payload.name!="" && payload.owner!=""){
+        client.connect((err) => {
+            assert.strictEqual(null,err);
+            console.log("Connected successfully to server");
+            const db = client.db(dbName);
+            insertDocument(db, () => {
+                client.close();
+                console.log("Disconnected MongoDB server");
+                callback("Successfully uploaded a restaurant record.");
+            });
         });
-    });
+    }else{
+        callback("Values of  both \"Name\" and \"Owner\" are required, you modified, don't you?");
+    }
 }
 
 const getRestaurantList = (query, callback) => {
@@ -142,15 +147,19 @@ const deleteRestaurant = (r_id,callback) =>{
 
 const editRestaurant = (payload, anId, callback)=>{
     const client = new MongoClient(url);
-    client.connect((err)=>{
-        assert.strictEqual(err,null);
-        const db = client.db(dbName);
-        const collection = db.collection('restaurants');
-        collection.updateOne({_id:ObjectId(anId)}, {$set: payload},(err)=>{
+    if(payload.name!="" && payload.owner!=""){
+        client.connect((err)=>{
             assert.strictEqual(err,null);
-            callback();
-        })
-    });
+            const db = client.db(dbName);
+            const collection = db.collection('restaurants');
+            collection.updateOne({_id:ObjectId(anId)}, {$set: payload},(err)=>{
+                assert.strictEqual(err,null);
+                callback("Successfully edited the record.");
+            })
+        });
+    }else{
+        callback("Values of  both \"Name\" and \"Owner\" are required, you modified, don't you?");
+    }
 }
 module.exports = { uploadRestaurant: uploadRestaurant,
                    getRestaurantList: getRestaurantList,

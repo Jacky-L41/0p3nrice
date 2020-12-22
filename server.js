@@ -154,8 +154,8 @@ app.post('/create', (req, res) => {
                     });
                 });
             } else {
-                dbactions.uploadRestaurant(payload, () => {
-                    res.redirect('/');
+                dbactions.uploadRestaurant(payload, (msg) => {
+                    res.render('result', {message: msg});
                 });
             }
         });
@@ -304,8 +304,8 @@ app.post('/edit', (req, res) => {
                         });
                     });
                 } else {
-                    dbactions.editRestaurant(payload, anId, () => {
-                        res.redirect('/');
+                    dbactions.editRestaurant(payload, anId, (msg) => {
+                        res.render('result', {message: msg});
                     });
                 }
             }
