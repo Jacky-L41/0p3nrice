@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 
@@ -82,4 +83,67 @@
         <p class="text-center text-white m-0 small">Copyright&nbsp;© Team Invalid 2020</p>
     </div>
 </footer>
+=======
+<html>
+    <head>
+        <title><%= aRestaurant.name %></title>
+    </head>
+    <body>
+        <H1><%= aRestaurant.name %></H1>
+        <br>
+        <br>
+        <% if(aRestaurant.photo && aRestaurant.photo != ""){ %>
+            <p><img src="data:<%= aRestaurant.mimetype %>;base64, <%= aRestaurant.photo %>"></p>
+        <% } else {%>
+            <p>No photo of <%= aRestaurant.name %></p>
+        <% } %>
+        <p>Borough: <%= aRestaurant.borough %></p>
+        <p>Cuisine: <%= aRestaurant.cuisine %></p>
+        <p>Street: <%= aRestaurant.address.street %></p>
+        <p>Building: <%= aRestaurant.address.building %></p>
+        <p>Zipcode: <%= aRestaurant.address.zipcode %></p>
+        <p>GPS: <%= JSON.stringify(aRestaurant.address.coord) %></p>
+        <p>Rating: <%= JSON.stringify(aRestaurant.grades) %></p>
+        <p>Owner: <%= aRestaurant.owner %></p>
+        <p>Create by: <%= aRestaurant.create_by %></p>
+        
+        <% if(aRestaurant.address.coord[0]!="" && aRestaurant.address.coord[1]!=""){ %>
+            <p><a href='/map?lon=<%= aRestaurant.address.coord[0] %>&lat=<%= aRestaurant.address.coord[1] %>'>Map</a></p>
+        <% } %>
+        <button onclick="location.href='/rate?_id=<%= aRestaurant._id %>'" 
+            <% if (isRated) { %>
+                disabled
+                >Rate(You have rated)
+            <% }else{ %>
+                >Rate
+            <% } %> 
+                
+        </button>
+
+        <button onclick="location.href='/edit?_id=<%= aRestaurant._id %>'" 
+            <% if (!isRecordOwner) { %>
+                disabled
+                >Edit(Not Owned)
+            <% }else{ %>
+                >Edit
+            <% } %> 
+                
+        </button>
+        
+        <button onclick="location.href='/delete?_id=<%= aRestaurant._id %>'" 
+            <% if (!isRecordOwner) { %>
+                disabled
+                >Delete(Not Owned)
+            <% }else{ %>
+                >Delete
+            <% } %> 
+                
+        </button>
+        
+        <br>
+        <input type='button' value='Back to main page' onclick="location.href='/'">
+        <br>
+        <button onclick="location.href='/logout'">Logout</button>
+    </body>
+>>>>>>> aef744e268f4aede9bfd5317208a3fd19b197f2b
 </html>

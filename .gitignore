@@ -104,7 +104,11 @@ dist
 .tern-port
 
 # Mongodb URL
+<<<<<<< HEAD
 models/mongodb_url.js
 
 .DS_Store
 
+=======
+models/mongodb_url.js
+>>>>>>> aef744e268f4aede9bfd5317208a3fd19b197f2b

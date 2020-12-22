@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 
@@ -50,6 +51,32 @@
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+=======
+<html>
+<head>
+  <title>Create record</title>
+</head>
+<body>
+	<p>Create restaurant record:</p>
+	<hr>
+	<form action="/create" method="post" enctype="multipart/form-data">
+        Restaurant ID: <input type="text" name="r_id"><br>
+        Name: <input type="text" name="name" required><br>
+        Borough: <input type="text" name="borough"><br>
+        Cuisine: <input type="text" name="cuisine"><br>
+        Photo: <input type="file" name="photo"><br>
+        Street: <input type="text" name="street"><br>
+        Building: <input type="text" name="building"><br>
+        Zipcode: <input type="text" name="zipcode"><br>
+        GPS coordinate (longtitude): <input type="text" name="coord_lon"><br>
+        GPS coordinate (latitude): <input type="text" name="coord_lat"><br>
+		Owner: <input type="text" name="owner" required><br>
+		<br>
+		
+		<input type="submit" value="Add">
+    </form>
+    <a href='/'>Go Back</a>
+>>>>>>> aef744e268f4aede9bfd5317208a3fd19b197f2b
 </body>
 
 </html>

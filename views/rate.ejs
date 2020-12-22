@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 
@@ -48,6 +49,34 @@
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>>
+=======
+<html>
+<head>
+    <title>Rate restaurant</title>
+</head>
+<body>
+	<h1>Rate</h1>
+	<form action="/rate?_id=<%= aRestaurant._id %>" method="post">
+		Score: <input type="text" pattern="[1-9]{1}" name="score"><br>
+        <br>
+        <input type="hidden" name="_id" value="<%= aRestaurant._id %>" disabled>
+        <input type="hidden" name="name" value="<%= aRestaurant.name %>" disabled>
+        <input type="submit" 
+            <% if (is_rated) { %>
+                disabled
+                value="Rate(You have rated)"
+            <% }else{ %>
+                value="Rate"
+            <% } %> 
+        >
+                
+
+    </form>
+    <br>
+    <input type='button' value='Back to main page' onclick="location.href='/'">
+    <br>
+    <button onclick="location.href='/logout'">Logout</button>
+>>>>>>> aef744e268f4aede9bfd5317208a3fd19b197f2b
 </body>
 
 </html>

@@ -13,7 +13,10 @@ const IsInteger = require('es-abstract/2015/IsInteger');
 // const { assert } = require('console');
 // const { fstat } = require('fs');
 
+<<<<<<< HEAD
 app.use(express.static('public'));
+=======
+>>>>>>> aef744e268f4aede9bfd5317208a3fd19b197f2b
 app.set('view engine', 'ejs');
 
 const SECRETKEY = 'I want to pass COMPS381F';
