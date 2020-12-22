@@ -123,8 +123,6 @@ app.get('/create', (req, res) => {
     }
 });
 
-
-
 app.post('/create', (req, res) => {
     if (req.session.authenticated) {
         payload = {};
@@ -322,16 +320,58 @@ app.post('/edit', (req, res) => {
 });
 
 app.get("/map", (req,res) => {
-	res.render("leaflet.ejs", {
+    res.render("leaflet.ejs", {
         lon:req.query.lon,
-		lat:req.query.lat,
-		zoom:req.query.zoom ? req.query.zoom : 15
-	});
+        lat:req.query.lat,
+        zoom:req.query.zoom ? req.query.zoom : 15
+    });
 });
 
 app.get('/logout', (req, res) => {
     req.session = null;   // clear cookie-session
     res.redirect('/');
+});
+
+
+
+
+app.get('/api/restaurant/name/:name', (req, res) => {
+    dbQuery = {}
+    dbQuery['name'] = req.params.name;
+    dbactions.getRestaurantList(dbQuery,(r_list, count)=>{
+        if(count == 0){
+            res.status(200).type('json').json({}).end();
+        }
+        else{
+            res.status(200).type('json').json(r_list).end();
+        }
+    });
+});
+
+app.get('/api/restaurant/borough/:borough', (req, res) => {
+    dbQuery = {}
+    dbQuery['borough'] = req.params.borough;
+    dbactions.getRestaurantList(dbQuery,(r_list, count)=>{
+        if(count == 0){
+            res.status(200).type('json').json({}).end();
+        }
+        else{
+            res.status(200).type('json').json(r_list).end();
+        }
+    });
+});
+
+app.get('/api/restaurant/cuisine/:cuisine', (req, res) => {
+    dbQuery = {}
+    dbQuery['cuisine'] = req.params.cuisine;
+    dbactions.getRestaurantList(dbQuery,(r_list, count)=>{
+        if(count == 0){
+            res.status(200).type('json').json({}).end();
+        }
+        else{
+            res.status(200).type('json').json(r_list).end();
+        }
+    });
 });
 
 app.listen(process.env.PORT || 8099);

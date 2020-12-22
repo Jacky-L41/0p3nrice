@@ -53,7 +53,8 @@ const getRestaurantList = (query, callback) => {
         // Get the documents collection
         var collection = db.collection('restaurants');
         // Find some documents
-        option = {projection: {'name': 1,'borough': 1, 'cuisine': 1, 'create_by':1}}
+        // option = {projection: {'name': 1,'borough': 1, 'cuisine': 1, 'create_by':1}}
+        option = {};
         collection.countDocuments(query, (err,count)=>{
             assert.strictEqual(err,null);
             collection.find(query, option).toArray(function(err, docs) {
