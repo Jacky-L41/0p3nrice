@@ -53,13 +53,17 @@ const getRestaurantList = (query, callback) => {
         // Get the documents collection
         var collection = db.collection('restaurants');
         // Find some documents
-        collection.find(query, {projection: {'name': 1,'borough': 1, 'cuisine': 1, 'create_by':1}}).toArray(function(err, docs) {
-          assert.strictEqual(err, null);
-          console.log("Found the following records");
-        //   console.log(docs)
-          callback(docs);
+        option = {projection: {'name': 1,'borough': 1, 'cuisine': 1, 'create_by':1}}
+        collection.countDocuments(query, (err,count)=>{
+            assert.strictEqual(err,null);
+            collection.find(query, option).toArray(function(err, docs) {
+                assert.strictEqual(err, null);
+                console.log("Found the following records");
+                //   console.log(docs)
+                callback(docs,count);
+            });
         });
-      }
+    }
 
     const client = new MongoClient(url);
     client.connect((err) => {
@@ -68,9 +72,9 @@ const getRestaurantList = (query, callback) => {
 
         const db = client.db(dbName);
 
-        findRestaurants(db,(a_list) => {
+        findRestaurants(db,(a_list, count) => {
            client.close();
-           callback(a_list);
+           callback(a_list, count);
         })
     });
 }

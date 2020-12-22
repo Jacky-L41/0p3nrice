@@ -19,7 +19,14 @@
          <% } %>
          <input type="submit" value="Search">
       </form>
-
+      <br><br>
+      <p>Found <%= docCount %>
+         <% if(parseInt(docCount)>0){ %> 
+            documents 
+         <% } else {%> 
+            document
+         <% } %>
+      </p>
       <% if (rList.length>0){ %>
       <table>
          <tr>
@@ -40,6 +47,7 @@
       </table>
       <% }else if(fromSearch){ %>
          <p> No restaurant record found with <%= searchString %> in <%= searchBy %>.</p>
+         <p> Click "Clear" button to show all</p>
       <% } else { %>
          <p> No restaurant record yet.</p>
       <% } %>

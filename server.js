@@ -38,9 +38,10 @@ app.get('/', (req, res) => {
     if (!req.session.authenticated) {    // user not logged in!
         res.redirect('/login');
     } else {
-        dbactions.getRestaurantList({},(r_list) => {
+        dbactions.getRestaurantList({},(r_list, count) => {
             res.status(200).render('mainpage', { name: req.session.username,
                                                 rList: r_list,
+                                                docCount: count,
                                                 fromSearch: false,
                                                 searchString: "",
                                                 searchBy:""
@@ -59,9 +60,10 @@ app.post('/search', (req,res)=>{
         if(req.body.searchBy.length > 0 && req.body.searchString.length > 0){
             dbQuery[req.body.searchBy] = req.body.searchString;
         }
-        dbactions.getRestaurantList(dbQuery,(r_list)=>{
+        dbactions.getRestaurantList(dbQuery,(r_list, count)=>{
             res.status(200).render('mainpage', { name: req.session.username, 
                                                 rList: r_list,
+                                                docCount: count,
                                                 fromSearch: true,
                                                 searchString: req.body.searchString,
                                                 searchBy: req.body.searchBy
