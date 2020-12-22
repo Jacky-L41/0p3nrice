@@ -105,3 +105,6 @@ dist
 
 # Mongodb URL
 models/mongodb_url.js
+
+.DS_Store
+
