@@ -36,5 +36,5 @@ db.restaurants.update({ _id: payload._id }, {$push: {grades: {user:"student",sco
 
 ### Modify Rate:
 ```
-db.restaurants.update({ _id: payload._id },{ $set: { "grades.$\[elem\].score" : 2 } },{arrayFilters: [ { "elem.user": { $eq: "demo" } } ]})
+db.restaurants.update({ _id: payload._id },{ $set: { "grades.$[elem].score" : 2 } },{arrayFilters: [ { "elem.user": { $eq: "demo" } } ]})
 ```
