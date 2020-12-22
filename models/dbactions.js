@@ -48,12 +48,12 @@ const uploadRestaurant = (payload, callback) => {
     });
 }
 
-const getRestaurantList = (callback) => {
+const getRestaurantList = (query, callback) => {
     var findRestaurants = function(db, callback) {
         // Get the documents collection
         var collection = db.collection('restaurants');
         // Find some documents
-        collection.find({}, {projection: {'name': 1}}).toArray(function(err, docs) {
+        collection.find(query, {projection: {'name': 1,'borough': 1, 'cuisine': 1, 'create_by':1}}).toArray(function(err, docs) {
           assert.strictEqual(err, null);
           console.log("Found the following records");
         //   console.log(docs)

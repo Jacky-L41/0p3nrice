@@ -5,19 +5,42 @@
       <a href='/create'>Create new restaurant record</a>
       <br>
       <br>
+      <form action='/search' method="post">
+         <input type="text" id="searchString" name="searchString" <% if(fromSearch){ %>value="<%= searchString %>"<%}%>>
+         <select name="searchBy">
+            <option value="name" <% if(searchBy=="name"){ %>selected<% } %>>Name</option>
+            <option value="borough" <% if(searchBy=="borough"){ %>selected<% } %>>Borough</option>
+            <option value="cuisine" <% if(searchBy=="cuisine"){ %>selected<% } %>>Cuisine</option>
+         </select>
+         <% if(fromSearch){ %>
+            <button onclick="document.getElementById('searchString').value = ''">Clear</button>
+         <% } else { %>
+            <input type="reset" value="Clear">
+         <% } %>
+         <input type="submit" value="Search">
+      </form>
+
       <% if (rList.length>0){ %>
       <table>
          <tr>
             <th>Name</th>
+            <th>Borough</th>
+            <th>Cuisine</th>
+            <th>Create By</th>
          </tr>
          <% for (i = 0; i<rList.length;i++){ %>
             <tr>
             <td><a href='/details?_id=<%= rList[i]._id %>'><%= rList[i].name %></a></td>
+            <td><%= rList[i].borough %></td>
+            <td><%= rList[i].cuisine %></td>
+            <td><%= rList[i].create_by %></td>
             </tr>
 
          <% } %>
       </table>
-      <% }else { %>
+      <% }else if(fromSearch){ %>
+         <p> No restaurant record found with <%= searchString %> in <%= searchBy %>.</p>
+      <% } else { %>
          <p> No restaurant record yet.</p>
       <% } %>
       <br>

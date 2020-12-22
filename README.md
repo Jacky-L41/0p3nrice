@@ -1,6 +1,5 @@
 # To Do:
 1. show Leaflet link when coord is available
-2. add search feature
 
 # Known issue
 1. Service will crack down when modify randomly query "_id". The cause is the "if" check in server.js only check if the query is empty, other than checking whether the _id exists in the mongodb.
