@@ -257,9 +257,6 @@ app.get('/delete', (req, res) => {
     }
 });
 
-
-
-
 app.get('/edit', (req, res) => {
     if (req.session.authenticated) {
         if (req.query._id != '') {
@@ -322,6 +319,14 @@ app.post('/edit', (req, res) => {
     else {
         res.status(401).end("Unauthorized");
     }
+});
+
+app.get("/map", (req,res) => {
+	res.render("leaflet.ejs", {
+        lon:req.query.lon,
+		lat:req.query.lat,
+		zoom:req.query.zoom ? req.query.zoom : 15
+	});
 });
 
 app.get('/logout', (req, res) => {

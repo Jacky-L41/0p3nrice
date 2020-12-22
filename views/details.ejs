@@ -1,5 +1,8 @@
 <html>
-   <body>
+    <head>
+        <title><%= aRestaurant.name %></title>
+    </head>
+    <body>
         <H1><%= aRestaurant.name %></H1>
         <br>
         <br>
@@ -17,7 +20,10 @@
         <p>Rating: <%= JSON.stringify(aRestaurant.grades) %></p>
         <p>Owner: <%= aRestaurant.owner %></p>
         <p>Create by: <%= aRestaurant.create_by %></p>
-
+        
+        <% if(aRestaurant.address.coord[0]!="" && aRestaurant.address.coord[1]!=""){ %>
+            <p><a href='/map?lon=<%= aRestaurant.address.coord[0] %>&lat=<%= aRestaurant.address.coord[1] %>'>Map</a></p>
+        <% } %>
         <button onclick="location.href='/rate?_id=<%= aRestaurant._id %>'" 
             <% if (isRated) { %>
                 disabled
@@ -52,5 +58,5 @@
         <input type='button' value='Back to main page' onclick="location.href='/'">
         <br>
         <button onclick="location.href='/logout'">Logout</button>
-   </body>
+    </body>
 </html>
