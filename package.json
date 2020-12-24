@@ -1,7 +1,7 @@
 {
     "name": "server",
     "description": "Node.js Session",
-    "author": "Raymond SO <rso@ouhk.edu.hk>",
+    "author": "Team Invalid",
     "version": "0.0.1",
     "dependencies": {
         "assert": "^2.0.0",
