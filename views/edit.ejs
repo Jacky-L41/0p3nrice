@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Edit - 0P3NR1C3</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="assets/css/Login-Form-Dark.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-dark navbar-custom">
+        <div class="container"><a class="navbar-brand" href="/">0P3NR1C3</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navbarResponsive"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item"></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout">Log OUT</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section style="padding-top: 90px;padding-left: 28px;padding-right: 28px;">
+        <div>
+            <form class="bootstrap-form-with-validation" action="/edit" method="post" enctype="multipart/form-data">
+                <h2 class="text-center">Edit Restaurant</h2>
+                <input name="_id" value="<%= aRestaurant._id %>" type="hidden">
+                <input name="create_by" value="<%= aRestaurant.create_by %>" type="hidden">
+                <div class="form-group"><label for="text-input">ID:</label><input class="form-control" type="text" id="r_id" name="r_id" value="<%= aRestaurant.r_id %>"></div>
+                <div class="form-group"><label for="text-input">Name:</label><input class="form-control" type="text" id="name" name="name" required value="<%= aRestaurant.name %>"></div>
+                <div class="form-group"><label for="text-input">Borough:</label><input class="form-control" type="text" id="borough" name="borough" value="<%= aRestaurant.borough %>"></div>
+                <div class="form-group"><label for="text-input">Cuisine</label><input class="form-control" type="text" id="cuisine" name="cuisine" value="<%= aRestaurant.cuisine %>"></div>
+                <div class="form-group"><label for="text-input">Street</label><input class="form-control" type="text" id="street" name="street" value="<%= aRestaurant.address.street %>"></div>
+                <div class="form-group"><label for="text-input">Building:</label><input class="form-control" type="text" id="building" name="building" value="<%= aRestaurant.address.building %>"></div>
+                <div class="form-group"><label for="text-input">Zipcode:</label><input class="form-control" type="text" id="zipcode" name="zipcode" value="<%= aRestaurant.address.zipcode %>"></div>
+                <div class="form-group"><label for="text-input">GPS coordinate (longitude):</label><input class="form-control" type="text" id="coord_lon" name="coord_lon" name="coord_lon" value="<%= aRestaurant.address.coord[0] %>"></div>
+                <div class="form-group"><label for="text-input">GPS coordinate (latitude):</label><input class="form-control" type="text" id="coord_lat" name="coord_lat" value="<%= aRestaurant.address.coord[1] %>"></div>
+                <div class="form-group"><label for="text-input">Owner:</label><input class="form-control" type="text" id="owner" name="owner" required value="<%= aRestaurant.owner %>"></div>
+                <div class="form-group"><label for="file-input">Photo:&nbsp; &nbsp;</label><input type="file" id="photo" name="photo"></div>
+                <div class="form-group d-xl-flex justify-content-xl-start"><button class="btn btn-primary bg-dark border-dark" type="submit" style="margin-right: 20px;">Edit</button></div>
+                <div class="form-group d-xl-flex justify-content-xl-start"><button class="btn btn-primary bg-dark border-dark" type="submit" style="margin-right: 20px;" onclick="location.href='/'">Back To Home Page</button></div>
+            </form>
+        </div>
+    </section>
+    <footer class="py-5 bg-black" style="bottom:0;position: absoloute;width:100%">
+      <div class="container">
+          <p class="text-center text-white m-0 small">Copyright&nbsp;© Team Invalid 2020</p>
+      </div>
+  </footer>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</body>
+
+</html>
