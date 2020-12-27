@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Detail - 0P3NR1C3</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="assets/css/Login-Form-Dark.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-dark navbar-custom">
+        <div class="container"><a class="navbar-brand" href="/">0P3NR1C3</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navbarResponsive"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item"></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout">Log OUT</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section style="padding-top: 90px;padding-left: 28px;padding-right: 28px;">
+        <div>
+                <h2 class="text-center"><%= aRestaurant.name %></h2>
+                <% if(aRestaurant.photo && aRestaurant.photo != ""){ %>
+                    <img style="margin: 10px;margin-bottom: 20px;" src="data:<%= aRestaurant.mimetype %>;base64, <%= aRestaurant.photo %>">
+                <% } else {%>
+                    <p>No photo of <%= aRestaurant.name %></p>
+                <% } %>
+                <div class="form-group"><label for="text-input">Borough: <%= aRestaurant.borough %></label></div>
+                <div class="form-group"><label for="text-input">Cuisine: <%= aRestaurant.cuisine %></label></div>
+                <div class="form-group"><label for="text-input">Street: <%= aRestaurant.address.street %></label></div>
+                <div class="form-group"><label for="text-input">Building: <%= aRestaurant.address.building %></label></div>
+                <div class="form-group"><label for="text-input">Zipcode: <%= aRestaurant.address.zipcode %>:</label></div>
+                <div class="form-group"><label for="text-input">GPS coordinate: <%= JSON.stringify(aRestaurant.address.coord) %></label></div>
+
+
+                <% if(aRestaurant.grades.length == 0){ %>
+                    <div class="form-group"><label for="text-input">Rating: No rating record yet.</label></div>
+                <% } else { %>
+                    <div class="form-group"><label for="text-input">Ratings: </label>
+                    <ol>
+                        <% for(i=0;i<aRestaurant.grades.length;i++){ %>
+                            <li><%= aRestaurant.grades[i].user %>: <%= aRestaurant.grades[i].score %></li>
+                        <% } %>
+                    </ol>
+                    </div>
+                <% } %>
+                <div class="form-group"><label for="text-input">Owner: <%= aRestaurant.owner %></label></div>
+                <div class="form-group"><label for="text-input">Create by: <%= aRestaurant.create_by %></label></div>
+                <% if(aRestaurant.address.coord[0]!="" && aRestaurant.address.coord[1]!=""){ %>
+                    <p><a href='/map?lon=<%= aRestaurant.address.coord[0] %>&lat=<%= aRestaurant.address.coord[1] %>'>Map</a></p>
+                <% } %>
+                <div class="form-group d-xl-flex justify-content-xl-start">
+                    <button class="btn btn-primary bg-dark border-dark" type="submit" style="margin-right: 20px;" onclick="location.href='/rate?_id=<%= aRestaurant._id %>'" 
+                        <% if (isRated) { %>
+                            disabled
+                            >Rate(You have rated)
+                        <% }else{ %>
+                            >Rate
+                        <% } %>    
+                    </button>
+                    <button class="btn btn-primary bg-dark border-dark" type="submit" style="margin-right: 20px;" onclick="location.href='/edit?_id=<%= aRestaurant._id %>'" 
+                        <% if (!isRecordOwner) { %>
+                            disabled
+                            >Edit(Not Owned)
+                        <% }else{ %>
+                            >Edit
+                        <% } %> 
+                    </button>
+                    <button class="btn btn-primary bg-dark border-dark" type="submit" style="margin-right: 20px;" onclick="location.href='/delete?_id=<%= aRestaurant._id %>'" 
+                        <% if (!isRecordOwner) { %>
+                            disabled
+                            >Delete(Not Owned)
+                        <% }else{ %>
+                            >Delete
+                        <% } %>            
+                    </button>
+                </div>
+                <div class="form-group d-xl-flex justify-content-xl-start"><button class="btn btn-primary bg-dark border-dark" type="submit" style="margin-right: 20px;" onclick="location.href='/'">Back To Home Page</button></div>
+        </div>
+    </section>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</body>
+<footer class="py-5 bg-black" style="bottom:0;position: absoloute;width:100%">
+    <div class="container">
+        <p class="text-center text-white m-0 small">Copyright&nbsp;© Team Invalid 2020</p>
+    </div>
+</footer>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>main</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin=""/>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+    integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+    crossorigin=""></script>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+</head>
+
+<body style="padding-top: 90px;padding-left: 30px;">
+    <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-dark navbar-custom">
+        <div class="container"><a class="navbar-brand" href="/">0P3NR1C3</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navbarResponsive"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item"></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout">Log OUT</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="map-clean">
+        <div class="container">
+            <div class="intro">
+                <h2 class="text-center">Location </h2>
+            </div>
+        </div>
+        <div id = "map" style = "width: 80%; height: 580px;  margin: auto;"></div>
+        <script>
+            // Creating map options
+            var mapOptions = {
+               center: [<%= lat %>,<%= lon %>],
+               zoom: <%= zoom %>
+            }
+            
+            // Creating a map object
+            var map = new L.map('map', mapOptions);
+            
+            // Creating a Layer object
+            var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+            
+            // Adding layer to the map
+            map.addLayer(layer);
+   
+            // Creating a marker
+            var marker = L.marker([<%=lat%>,<%=lon%>]);
+   
+            // Adding marker to the map
+            marker.addTo(map);
+   
+         </script>
+    </div><button onclick="location.href='/'" class="btn btn-primary bg-dark border-dark" type="submit" style="margin-right: 20px;margin-top: 30px;margin-bottom: 30px;">Back To Home Page</button>
+    <footer class="py-5 bg-black" style="position: absolute; left: 0;width: 100%;">
+        <div class="container">
+            <p class="text-center text-white m-0 small">Copyright&nbsp;© Team Invalid 2020</p>
+        </div>
+    </footer>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</body>
+
+</html>

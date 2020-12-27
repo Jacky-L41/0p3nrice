@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Home - 0P3NR1C3</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-dark navbar-custom">
+        <div class="container"><a class="navbar-brand" href="/">0P3NR1C3</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navbarResponsive"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item"></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout">Log OUT</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section class="user_information">
+        <div></div>
+        <h3 style="padding-top: 78px;padding-left: 25px;padding-bottom: 10px;">Hello, <%= name %>!</h3>
+    </section>
+    
+    <section class="option_button" style="padding-left: 19px;padding-bottom: 15px;">
+        <div><button class="btn btn-primary bg-dark border-dark" type="button" style="margin-bottom: 15px;" onclick="window.location.href='/create'">Create New Restaurant</button></div>
+        <div style="padding-top: 10px;">
+            <form action='/search' method="post">
+                <select style="padding: 8px;margin-right: 10px;padding-top: 5px;" name="searchBy">
+                    <optgroup label="Select Option">
+                        <option value="name" <% if(searchBy=="name"){ %>selected<% } %>>Name</option>
+                        <option value="borough" <% if(searchBy=="borough"){ %>selected<% } %>>Borough</option>
+                        <option value="cuisine" <% if(searchBy=="cuisine"){ %>selected<% } %>>Cuisine</option>
+                    </optgroup>
+                </select>
+                <input type="text" placeholder="" style="padding-right: 50px;padding: 5px;padding-top: 3px;" id="searchString" name="searchString" <% if(fromSearch){ %>value="<%= searchString %>"<%}%>>
+                <% if(fromSearch){ %>
+                    <button class="btn btn-primary bg-dark border-dark" type="submit" style="margin-left: 10px;margin-right: 10px;" onclick="document.getElementById('searchString').value = ''">Clear</button>
+                <% } else { %>
+                    <button class="btn btn-primary bg-dark border-dark" type="reset" style="margin-left: 10px;margin-right: 10px;">Clear</button>
+                <% } %>
+                <button class="btn btn-primary bg-dark border-dark" type="submit">Search</button>
+            </form>
+            <p style="padding-top: 18px;padding-left: 8px;">Found <%= docCount %>
+                <% if(parseInt(docCount)>0){ %> 
+                   Records 
+                <% } else {%> 
+                   Record
+                <% } %></p>
+        </div>
+    </section>
+    <section class="data_list">
+        <div>
+            <div class="table-responsive">
+                <% if (rList.length>0){ %>
+                <table class="table">
+                    <thead style="padding-left: 28px;">
+                        <tr>
+                            <th style="padding-left: 28px;">Name</th>
+                            <th style="padding-left: 28px;">Borough</th>
+                            <th style="padding-left: 28px;">Cuisine</th>
+                            <th style="padding-left: 28px;">Created By</th>
+                        </tr>
+                    </thead>
+                    <tbody style="padding-left: 28px;">
+                        <% for (i = 0; i<rList.length;i++){ %>
+                        <tr onmouseover="this.bgColor='#EEEEEE'"onmouseout="this.bgColor='#FFFFFF'" onclick="window.location='/details?_id=<%= rList[i]._id %>'">
+                            <td style="padding-left: 28px;"><%= rList[i].name %></td>
+                            <td style="padding-left: 28px;"><%= rList[i].borough %></td>
+                            <td style="padding-left: 28px;"><%= rList[i].cuisine %></td>
+                            <td style="padding-left: 28px;"><%= rList[i].create_by %></td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+                <% }else if(fromSearch){ %>
+                    <p style="padding-top: 10px;padding-left: 8px;">No restaurant record found with <%= searchString %> in <%= searchBy %>.</p>
+                    <p style="padding-top: 10px;padding-left: 8px;">Click "Clear" button to show all</p>
+                <% } else { %>
+                    <p style="padding-top: 10px;padding-left: 8px;"> No restaurant record yet.</p>
+                <% } %>
+            </div>
+        </div>
+    </section>
+    <footer class="py-5 bg-black" style="bottom:0;position: absoloute;width:100%">
+        <div class="container">
+            <p class="text-center text-white m-0 small">Copyright&nbsp;© Team Invalid 2020</p>
+        </div>
+    </footer>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</body>
+
+</html>
