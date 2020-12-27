@@ -36,11 +36,11 @@
                 <div class="form-group"><label for="text-input">Street: <%= aRestaurant.address.street %></label></div>
                 <div class="form-group"><label for="text-input">Building: <%= aRestaurant.address.building %></label></div>
                 <div class="form-group"><label for="text-input">Zipcode: <%= aRestaurant.address.zipcode %>:</label></div>
-                <% if(aRestaurant.address.coord[0].length>0 && aRestaurant.address.coord[1]>0){ %>
-                <div class="form-group"><label for="text-input">GPS coordinate: [Longtitude: <%= aRestaurant.address.coord[0] %>, Latitude: <%= aRestaurant.address.coord[1] %>]</label></div>
+                <% if(aRestaurant.address.coord.lon.length > 0 && aRestaurant.address.coord.lat.length>0){ %>
+                <div class="form-group"><label for="text-input">GPS coordinate: [Longtitude: <%= aRestaurant.address.coord.lon %>, Latitude: <%= aRestaurant.address.coord.lat %>]</label></div>
                 <% } else { %>
                     <div class="form-group"><label for="text-input">GPS coordinate: Coordinate not set</label></div>
-                <% { %>
+                <% } %>
 
                 <% if(aRestaurant.grades.length == 0){ %>
                     <div class="form-group"><label for="text-input">Rating: No rating record yet.</label></div>
@@ -55,8 +55,8 @@
                 <% } %>
                 <div class="form-group"><label for="text-input">Owner: <%= aRestaurant.owner %></label></div>
                 <div class="form-group"><label for="text-input">Create by: <%= aRestaurant.create_by %></label></div>
-                <% if(aRestaurant.address.coord[0]!="" && aRestaurant.address.coord[1]!=""){ %>
-                    <p><a href='/map?lon=<%= aRestaurant.address.coord[0] %>&lat=<%= aRestaurant.address.coord[1] %>'>Map</a></p>
+                <% if(aRestaurant.address.coord.lon !="" && aRestaurant.address.coord.lat!=""){ %>
+                    <p><a href='/map?lon=<%= aRestaurant.address.coord.lon %>&lat=<%= aRestaurant.address.coord.lat %>'>Map</a></p>
                 <% } %>
                 <div class="form-group d-xl-flex justify-content-xl-start">
                     <button class="btn btn-primary bg-dark border-dark" type="submit" style="margin-right: 20px;" onclick="location.href='/rate?_id=<%= aRestaurant._id %>'" 

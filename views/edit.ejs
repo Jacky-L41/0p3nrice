@@ -35,8 +35,8 @@
                 <div class="form-group"><label for="text-input">Street</label><input class="form-control" type="text" id="street" name="street" value="<%= aRestaurant.address.street %>"></div>
                 <div class="form-group"><label for="text-input">Building:</label><input class="form-control" type="text" id="building" name="building" value="<%= aRestaurant.address.building %>"></div>
                 <div class="form-group"><label for="text-input">Zipcode:</label><input class="form-control" type="text" id="zipcode" name="zipcode" value="<%= aRestaurant.address.zipcode %>"></div>
-                <div class="form-group"><label for="text-input">GPS coordinate (longitude):</label><input class="form-control" type="text" id="coord_lon" name="coord_lon" name="coord_lon" value="<%= aRestaurant.address.coord[0] %>"></div>
-                <div class="form-group"><label for="text-input">GPS coordinate (latitude):</label><input class="form-control" type="text" id="coord_lat" name="coord_lat" value="<%= aRestaurant.address.coord[1] %>"></div>
+                <div class="form-group"><label for="text-input">GPS coordinate (longitude):</label><input class="form-control" type="text" id="coord_lon" name="coord_lon" name="coord_lon" value="<%= aRestaurant.address.coord.lon %>"></div>
+                <div class="form-group"><label for="text-input">GPS coordinate (latitude):</label><input class="form-control" type="text" id="coord_lat" name="coord_lat" value="<%= aRestaurant.address.coord.lat %>"></div>
                 <div class="form-group"><label for="text-input">Owner:</label><input class="form-control" type="text" id="owner" name="owner" required value="<%= aRestaurant.owner %>"></div>
                 <div class="form-group"><label for="file-input">Photo:&nbsp; &nbsp;</label><input type="file" id="photo" name="photo"></div>
                 <div class="form-group d-xl-flex justify-content-xl-start"><button class="btn btn-primary bg-dark border-dark" type="submit" style="margin-right: 20px;">Edit</button></div>

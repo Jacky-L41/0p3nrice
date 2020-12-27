@@ -145,7 +145,7 @@ app.post('/create', (req, res) => {
                 street: fields.street,
                 building: fields.building,
                 zipcode: fields.zipcode,
-                coord: [fields.coord_lon, fields.coord_lat]
+                coord: {'lon':fields.coord_lon, 'lat':fields.coord_lat}
             };
             payload['grades'] = [];
             payload['owner'] = fields.owner;
@@ -299,7 +299,7 @@ app.post('/edit', (req, res) => {
                     street: fields.street,
                     building: fields.building,
                     zipcode: fields.zipcode,
-                    coord: [fields.coord_lon, fields.coord_lat]
+                    coord: {'lon': fields.coord_lon, 'lat':fields.coord_lat}
                 };
                 payload['owner'] = fields.owner;
                 if (files.photo && files.photo.size > 0) {
