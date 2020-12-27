@@ -5,6 +5,7 @@ const app = express();
 const formidable = require('formidable');
 const dbactions = require('./models/dbactions');
 // const { ObjectId } = require('bson');
+const ObjectId = require('mongodb').ObjectId;
 const fs = require('fs');
 const assert = require('assert');
 const IsInteger = require('es-abstract/2015/IsInteger');
@@ -168,7 +169,7 @@ app.post('/create', (req, res) => {
 
 app.get('/details', (req, res) => {
     if (req.session.authenticated) {
-        if (req.query._id != '') {
+        if (req.query._id != '' && ObjectId.isValid(req.query._id)) {
             dbactions.getRestaurant(req.query._id, (aRestaurant) => {
                 var isRated = false;
                 if (Array.isArray(aRestaurant.grades) && aRestaurant.grades.length > 0) {
@@ -195,7 +196,7 @@ app.get('/details', (req, res) => {
 
 app.get('/rate', (req, res) => {
     if (req.session.authenticated) {
-        if (req.query._id != '') {
+        if (req.query._id != '' && ObjectId.isValid(req.query._id)) {
             dbactions.getRestaurant(req.query._id, (aRestaurant) => {
                 var isRated = false;
                 if (Array.isArray(aRestaurant.grades) && aRestaurant.grades.length > 0) {
@@ -237,7 +238,7 @@ app.post('/rate', (req, res) => {
 
 app.get('/delete', (req, res) => {
     if (req.session.authenticated) {
-        if (req.query._id != '') {
+        if (req.query._id != ''  && ObjectId.isValid(req.query._id)) {
             dbactions.getRestaurant(req.query._id, (aRestaurant) => {
                 if (aRestaurant.create_by == req.session.username) {
                     dbactions.deleteRestaurant(req.query._id, () => {
@@ -258,7 +259,7 @@ app.get('/delete', (req, res) => {
 
 app.get('/edit', (req, res) => {
     if (req.session.authenticated) {
-        if (req.query._id != '') {
+        if (req.query._id != '' && ObjectId.isValid(req.query._id)) {
             dbactions.getRestaurant(req.query._id, (aRestaurant) => {
                 if (aRestaurant.create_by == req.session.username) {
                     res.render('edit', { aRestaurant: aRestaurant });
