@@ -27,10 +27,10 @@ Go to http://localhost:8099
 # Notes
 
 Structure:
-`
+```
     root/
     ├── models/ (Models)
     ├── views/ (Views)
     ├── public/ (Style config of Views)
     └── server.js (Router and Controller)
-`
+```
