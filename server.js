@@ -29,6 +29,7 @@ app.set('view engine', 'ejs');
 app.use(session({
     name: 'loginSession',
     keys: [SECRETKEY],
+    maxAge: 8 * 60 * 60 * 1000
 }));
 
 // support parsing of application/json type post data
@@ -75,7 +76,12 @@ app.post('/search', (req,res)=>{
 });
 
 app.get('/login', (req, res) => {
-    res.status(200).render('login', { loginMessage: '' });
+    if(req.session.authenticated){
+        res.redirect('/');
+    }
+    else{
+        res.status(200).render('login', { loginMessage: '' });
+    }
 });
 
 app.post('/login', (req, res) => {
