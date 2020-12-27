@@ -35,7 +35,7 @@
                 <div class="form-group"><label for="text-input">Cuisine: <%= aRestaurant.cuisine %></label></div>
                 <div class="form-group"><label for="text-input">Street: <%= aRestaurant.address.street %></label></div>
                 <div class="form-group"><label for="text-input">Building: <%= aRestaurant.address.building %></label></div>
-                <div class="form-group"><label for="text-input">Zipcode: <%= aRestaurant.address.zipcode %>:</label></div>
+                <div class="form-group"><label for="text-input">Zipcode: <%= aRestaurant.address.zipcode %></label></div>
                 <% if(aRestaurant.address.coord.lon.length > 0 && aRestaurant.address.coord.lat.length>0){ %>
                 <div class="form-group"><label for="text-input">GPS coordinate: [Longtitude: <%= aRestaurant.address.coord.lon %>, Latitude: <%= aRestaurant.address.coord.lat %>]</label></div>
                 <% } else { %>
