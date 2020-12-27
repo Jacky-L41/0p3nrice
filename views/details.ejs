@@ -37,7 +37,19 @@
                 <div class="form-group"><label for="text-input">Building: <%= aRestaurant.address.building %></label></div>
                 <div class="form-group"><label for="text-input">Zipcode: <%= aRestaurant.address.zipcode %>:</label></div>
                 <div class="form-group"><label for="text-input">GPS coordinate: <%= JSON.stringify(aRestaurant.address.coord) %></label></div>
-                <div class="form-group"><label for="text-input">Rating: <%= JSON.stringify(aRestaurant.grades) %></label></div>
+
+
+                <% if(aRestaurant.grades.length == 0){ %>
+                    <div class="form-group"><label for="text-input">Rating: No rating record yet.</label></div>
+                <% } else { %>
+                    <div class="form-group"><label for="text-input">Ratings: </label>
+                    <ol>
+                        <% for(i=0;i<aRestaurant.grades.length;i++){ %>
+                            <li><%= aRestaurant.grades[i].user %>: <%= aRestaurant.grades[i].score %></li>
+                        <% } %>
+                    </ol>
+                    </div>
+                <% } %>
                 <div class="form-group"><label for="text-input">Owner: <%= aRestaurant.owner %></label></div>
                 <div class="form-group"><label for="text-input">Create by: <%= aRestaurant.create_by %></label></div>
                 <% if(aRestaurant.address.coord[0]!="" && aRestaurant.address.coord[1]!=""){ %>

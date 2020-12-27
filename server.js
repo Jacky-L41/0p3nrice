@@ -137,7 +137,7 @@ app.post('/create', (req, res) => {
         const form = new formidable.IncomingForm();
         form.parse(req, (err, fields, files) => {
             assert.strictEqual(err, null);
-            payload['restaurant_id'] = fields.r_id;
+            // payload['restaurant_id'] = fields.r_id;
             payload['name'] = fields.name;
             payload['borough'] = fields.borough;
             payload['cuisine'] = fields.cuisine;
@@ -291,7 +291,7 @@ app.post('/edit', (req, res) => {
             var anId = fields._id
             var create_by = fields.create_by;
             if (create_by == req.session.username) {
-                payload['restaurant_id'] = fields.r_id;
+                // payload['restaurant_id'] = fields.r_id;
                 payload['name'] = fields.name;
                 payload['borough'] = fields.borough;
                 payload['cuisine'] = fields.cuisine;
