@@ -29,6 +29,7 @@
                 <h2 class="text-center">Edit Restaurant</h2>
                 <input name="_id" value="<%= aRestaurant._id %>" type="hidden">
                 <input name="create_by" value="<%= aRestaurant.create_by %>" type="hidden">
+                <div class="form-group"><label for="text-input">Restaurant ID:</label><input class="form-control" type="text" id="r_id" name="r_id" required value="<%= aRestaurant.restaurant_id %>"></div>
                 <div class="form-group"><label for="text-input">Name:</label><input class="form-control" type="text" id="name" name="name" required value="<%= aRestaurant.name %>"></div>
                 <div class="form-group"><label for="text-input">Borough:</label><input class="form-control" type="text" id="borough" name="borough" value="<%= aRestaurant.borough %>"></div>
                 <div class="form-group"><label for="text-input">Cuisine</label><input class="form-control" type="text" id="cuisine" name="cuisine" value="<%= aRestaurant.cuisine %>"></div>

@@ -31,6 +31,7 @@
                 <% } else {%>
                     <p>No photo of <%= aRestaurant.name %></p>
                 <% } %>
+                <div class="form-group"><label for="text-input">Restaurant ID: <%= aRestaurant.restaurant_id %></label></div>
                 <div class="form-group"><label for="text-input">Borough: <%= aRestaurant.borough %></label></div>
                 <div class="form-group"><label for="text-input">Cuisine: <%= aRestaurant.cuisine %></label></div>
                 <div class="form-group"><label for="text-input">Street: <%= aRestaurant.address.street %></label></div>
