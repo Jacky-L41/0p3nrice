@@ -1,6 +1,5 @@
 # Known issue
-1. Service will crack down when modify randomly query "_id". The cause is the "if" check in server.js only check if the query is empty, other than checking whether the _id exists in the mongodb.
-2. No validation in creating record with coordinates.
+1. No validation in creating record with coordinates.
 
 # Accounts
 Integrated accounts: 
