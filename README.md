@@ -1,8 +1,8 @@
 # Known issue
 1. No validation in creating record with coordinates.
 
-# Accounts
-Integrated accounts: 
+# Information
+### Integrated accounts for testing
 student (no password)
 demo (no password)
 
