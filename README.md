@@ -1,3 +1,6 @@
+# Description
+A simple restaurant platform for learning Node.js, website CSS style is configured by OTHER teammate but NOT me.
+
 # Known issue
 1. No validation in creating record with coordinates.
 
